@@ -1,0 +1,31 @@
+{
+  "name": "game-projekt-1",
+  "version": "1.0.0",
+  "description": "Ein einfaches Browser-Spiel zur Schulung der Reaktionszeit. Klicke so oft wie möglich auf das grüne Ziel, bevor die Zeit abläuft.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:watch": "vitest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hismaeel-viona/game-projekt-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hismaeel-viona/game-projekt-1/issues"
+  },
+  "homepage": "https://github.com/hismaeel-viona/game-projekt-1#readme",
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.9"
+  }
+}
