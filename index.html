@@ -44,16 +44,45 @@
             </aside>
  
             <div class="spiel-panel">
-                <section id="spielfeld">
-                    <button id="ziel" aria-label="Ziel"></button>
+                <section id="spielfeld" tabindex="0" role="application" aria-label="Spielfeld">
+                    <button id="ziel" aria-label="Ziel treffen"></button>
                     <button class="bombe" aria-label="Bombe"></button>
                     <button class="bombe" aria-label="Bombe"></button>
                     <button class="bombe" aria-label="Bombe"></button>
                     <div id="feuerwerk" aria-hidden="true"></div>
                 </section>
+
+                <section id="statistik" class="statistik hidden" aria-label="Spielstatistik" role="region">
+                    <h2>Spielstatistik</h2>
+                    <div class="statistik-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Punkte</span>
+                            <span id="stat-punkte" class="stat-wert">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Treffer</span>
+                            <span id="stat-treffer" class="stat-wert">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Fehlklicks</span>
+                            <span id="stat-fehlklicks" class="stat-wert">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Ø Reaktionszeit</span>
+                            <span id="stat-avg-zeit" class="stat-wert">0 ms</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Beste Zeit</span>
+                            <span id="stat-beste-zeit" class="stat-wert">0 ms</span>
+                        </div>
+                    </div>
+                </section>
  
                 <div class="steuerung">
                     <button id="start">Spiel starten</button>
+                    <p class="tastatur-hinweis" aria-hidden="true">
+                        Tastatur: Leertaste = Klick | ESC = Beenden
+                    </p>
                 </div>
             </div>
 
@@ -74,7 +103,7 @@
             </aside>
         </div>
  
-        <p id="meldung">Bereit?</p>
+        <p id="meldung" role="status" aria-live="polite">Bereit?</p>
 </div>
 </main>
 

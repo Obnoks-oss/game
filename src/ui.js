@@ -56,6 +56,12 @@
                 playerNameInput: document.getElementById("player-name"),
                 recordSaveButton: document.getElementById("record-save"),
                 recordCancelButton: document.getElementById("record-cancel"),
+                statistik: document.getElementById("statistik"),
+                statPunkte: document.getElementById("stat-punkte"),
+                statTreffer: document.getElementById("stat-treffer"),
+                statFehlklicks: document.getElementById("stat-fehlklicks"),
+                statAvgZeit: document.getElementById("stat-avg-zeit"),
+                statBesteZeit: document.getElementById("stat-beste-zeit"),
             };
             return this.elements;
         },
@@ -172,6 +178,26 @@
                     group.classList.toggle("active", mode === key);
                 }
             });
+        },
+
+        showStats(stats) {
+            const elements = this.getElements();
+            if (!elements.statistik) {
+                return;
+            }
+            setTextContent(elements.statPunkte, stats.points);
+            setTextContent(elements.statTreffer, stats.hits);
+            setTextContent(elements.statFehlklicks, stats.missclicks);
+            setTextContent(elements.statAvgZeit, stats.avgReactionTime + " ms");
+            setTextContent(elements.statBesteZeit, stats.bestReactionTime + " ms");
+            elements.statistik.classList.remove("hidden");
+        },
+
+        hideStats() {
+            const elements = this.getElements();
+            if (elements.statistik) {
+                elements.statistik.classList.add("hidden");
+            }
         },
 
         showRecordDialog() {

@@ -24,10 +24,44 @@
         return {
             points: 0,
             record: 0,
-            reset() { this.points = 0; },
+            hits: 0,
+            missclicks: 0,
+            reactionTimes: [],
+            bestTime: Infinity,
+            reset() {
+                this.points = 0;
+                this.hits = 0;
+                this.missclicks = 0;
+                this.reactionTimes = [];
+                this.bestTime = Infinity;
+            },
             increase() {
                 this.points = calculatePointsFn(this.points);
                 return this.points;
+            },
+            hit(reactionTime) {
+                this.points = calculatePointsFn(this.points);
+                this.hits++;
+                if (reactionTime != null) {
+                    this.reactionTimes.push(reactionTime);
+                    if (reactionTime < this.bestTime) {
+                        this.bestTime = reactionTime;
+                    }
+                }
+                return this.points;
+            },
+            missclick() { this.missclicks++; },
+            getStats() {
+                const avg = this.reactionTimes.length > 0
+                    ? this.reactionTimes.reduce((a, b) => a + b, 0) / this.reactionTimes.length
+                    : 0;
+                return {
+                    points: this.points,
+                    hits: this.hits,
+                    missclicks: this.missclicks,
+                    avgReactionTime: Math.round(avg),
+                    bestReactionTime: this.bestTime === Infinity ? 0 : this.bestTime,
+                };
             },
             decrease() { this.points = Math.max(0, this.points - 1); return this.points; },
             finishRound() {
@@ -74,6 +108,8 @@
             setTargetVisible() {},
             setBombsVisible() {},
             showFireworks() {},
+            showStats() {},
+            hideStats() {},
         };
     }
 
@@ -88,9 +124,9 @@
     const uiModule = resolveModule("ui") || {};
 
     const calculatePoints = scoringModule.calculatePoints || root.Reaktionsjaeger?.calculatePoints || ((currentPoints) => currentPoints + 1);
-    const scoring = scoringModule.scoring || createScoringFallback(calculatePoints);
-    const storage = storageModule.storage || createStorageFallback();
-    const ui = uiModule.ui || createUiFallback();
+    const scoring = scoringModule.scoring || scoringModule || createScoringFallback(calculatePoints);
+    const storage = storageModule.storage || storageModule || createStorageFallback();
+    const ui = uiModule.ui || uiModule || createUiFallback();
 
     const elements = ui.init ? ui.init() : {};
     const modusConfig = {
@@ -108,6 +144,7 @@
     let bombenAktiv = false;
     let modus = "warmup";
     let pendingRecord = null;
+    let zielErscheinungsZeit = null;
 
     scoring.record = storage.loadRecord(0);
     ui.renderHighscores ? ui.renderHighscores(storage.loadHighscores ? storage.loadHighscores() : {}, null) : null;
@@ -177,6 +214,8 @@
         elements.ziel.style.height = `${neueGroesse}px`;
         elements.ziel.style.setProperty("--ziel-scale", "1");
         platziereElementZufall(elements.ziel, neueGroesse);
+        zielErscheinungsZeit = Date.now();
+        elements.ziel.focus();
     }
 
     function startTargetTimer() {
@@ -270,6 +309,7 @@
         scoring.reset();
         spielLaeuft = true;
         bombenAktiv = false;
+        ui.hideStats();
 
         spielRestzeit = modusConfig[modus].spielDauer;
         zielRestzeit = modusConfig[modus].zielzeit === null ? null : Math.round(modusConfig[modus].zielzeit * 1000);
@@ -301,6 +341,9 @@
         ui.setStartButtonDisabled(false);
         anzeigeAktualisieren();
 
+        const stats = scoring.getStats();
+        ui.showStats(stats);
+
         const result = scoring.finishRound();
         storage.saveRecord(result.record);
         if (result.isNewRecord) {
@@ -321,7 +364,8 @@
         if (!spielLaeuft) {
             return;
         }
-        scoring.increase();
+        const reactionTime = zielErscheinungsZeit ? Date.now() - zielErscheinungsZeit : null;
+        scoring.hit(reactionTime);
         anzeigeAktualisieren();
         ui.setMessage("Treffer! Punkt erzielt.");
         elements.ziel.classList.remove("hit");
@@ -339,12 +383,17 @@
     }
 
     function handleFieldClick(event) {
-        if (spielLaeuft) {
+        const target = event.target;
+        if (!target || !(target instanceof Element)) {
             return;
         }
 
-        const target = event.target;
-        if (!target || !(target instanceof Element)) {
+        if (spielLaeuft) {
+            const isInPlayArea = target.closest("#spielfeld");
+            if (isInPlayArea) {
+                scoring.missclick();
+                ui.setMessage("Fehlklick! Konzentrier dich auf den Kreis.");
+            }
             return;
         }
 
@@ -407,6 +456,23 @@
             ui.hideRecordDialog();
         });
     }
+
+    bindIfPresent(document, "keydown", (event) => {
+        if (event.key === "Escape") {
+            if (elements.recordDialog && !elements.recordDialog.classList.contains("hidden")) {
+                pendingRecord = null;
+                ui.hideRecordDialog();
+            }
+            return;
+        }
+
+        if (!spielLaeuft) return;
+
+        if (event.key === " " || event.code === "Space") {
+            event.preventDefault();
+            elements.ziel.click();
+        }
+    });
 
     resetGame();
 

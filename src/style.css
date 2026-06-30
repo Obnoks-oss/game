@@ -283,6 +283,13 @@ h1,
     font-weight: bold;
 }
 
+.tastatur-hinweis {
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin: 8px 0 0;
+}
+
 @media (max-width: 900px) {
     .spiel-layout {
         grid-template-columns: 170px minmax(0, 1fr);
@@ -358,5 +365,82 @@ h1,
     100% {
         opacity: 0;
         transform: translate(var(--dx), var(--dy)) scale(0.3);
+    }
+}
+
+.statistik {
+    padding: 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.statistik.hidden {
+    display: none;
+}
+
+.statistik h2 {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.statistik-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.stat-item {
+    padding: 10px 8px;
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.stat-wert {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#spielfeld:focus-visible {
+    outline: 3px solid #facc15;
+    outline-offset: 2px;
+}
+
+button:focus-visible {
+    outline: 3px solid #facc15;
+    outline-offset: 2px;
+}
+
+input:focus-visible {
+    outline: 3px solid #facc15;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #ziel.hit {
+        animation: none;
+    }
+
+    #feuerwerk span {
+        animation: none;
+        opacity: 0;
+    }
+
+    #ziel {
+        transition: none;
+    }
+
+    .modus-button {
+        transition: none;
     }
 }
