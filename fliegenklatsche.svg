@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <filter id="blut-blur">
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+    <style>
+      @keyframes swat {
+        0%   { transform: rotate(55deg); }
+        8%   { transform: rotate(0deg) translate(0,0); }
+        18%  { transform: rotate(0deg) translate(50px,65px); }
+        23%  { transform: rotate(-2deg) translate(50px,68px); }
+        25%  { transform: rotate(0deg) translate(50px,65px); }
+        28%  { transform: rotate(0deg) translate(50px,62px); }
+        30%  { transform: rotate(0deg) translate(50px,63px); }
+        40%  { transform: rotate(0deg) translate(50px,63px); }
+        45%  { transform: rotate(2deg) translate(48px,60px); }
+        100% { transform: rotate(2deg) translate(48px,60px); }
+      }
+      @keyframes flyMove {
+        0%   { opacity: 1; transform: translate(0,0); }
+        5%   { opacity: 1; transform: translate(-15px,-25px); }
+        10%  { opacity: 1; transform: translate(10px,-10px); }
+        15%  { opacity: 1; transform: translate(-8px,5px); }
+        20%  { opacity: 1; transform: translate(5px,0); }
+        23%  { opacity: 1; transform: translate(0,0); }
+        24%  { opacity: 1; transform: translate(0,0) scale(1.3,0.5); }
+        25%  { opacity: 0; transform: translate(0,0) scale(2,0.1); }
+        100% { opacity: 0; transform: translate(0,0) scale(1,1); }
+      }
+      @keyframes splat {
+        0%   { opacity: 0; transform: scale(0); }
+        24%  { opacity: 0; transform: scale(0); }
+        25%  { opacity: 1; transform: scale(0.5); }
+        27%  { opacity: 1; transform: scale(1.2); }
+        30%  { opacity: 1; transform: scale(1); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+      @keyframes impactFlash {
+        0%   { opacity: 0; transform: scale(0); }
+        24%  { opacity: 0; transform: scale(0); }
+        25%  { opacity: 0.6; transform: scale(1); }
+        30%  { opacity: 0; transform: scale(1.5); }
+        100% { opacity: 0; transform: scale(1.5); }
+      }
+      @keyframes bloodDrop1 {
+        0%   { opacity: 0; transform: translate(0,0) scale(0); }
+        25%  { opacity: 0; transform: translate(0,0) scale(0); }
+        26%  { opacity: 1; transform: translate(0,0) scale(1); }
+        32%  { opacity: 1; transform: translate(-80px,-45px) scale(0.8); }
+        40%  { opacity: 0.7; transform: translate(-75px,-40px) scale(0.7); }
+        50%  { opacity: 0.7; transform: translate(-75px,-38px) scale(0.7); }
+        55%  { opacity: 0.5; transform: translate(-73px,-35px) scale(0.7); }
+        100% { opacity: 0.4; transform: translate(-73px,-35px) scale(0.6); }
+      }
+      @keyframes bloodDrop2 {
+        0%   { opacity: 0; transform: translate(0,0) scale(0); }
+        25%  { opacity: 0; transform: translate(0,0) scale(0); }
+        26%  { opacity: 0; }
+        27%  { opacity: 1; transform: translate(0,0) scale(1); }
+        33%  { opacity: 1; transform: translate(70px,-55px) scale(0.9); }
+        42%  { opacity: 0.7; transform: translate(65px,-50px) scale(0.7); }
+        52%  { opacity: 0.7; transform: translate(63px,-48px) scale(0.7); }
+        58%  { opacity: 0.5; transform: translate(60px,-45px) scale(0.6); }
+        100% { opacity: 0.3; transform: translate(60px,-45px) scale(0.5); }
+      }
+      @keyframes bloodDrop3 {
+        0%   { opacity: 0; transform: translate(0,0) scale(0); }
+        25%  { opacity: 0; transform: translate(0,0) scale(0); }
+        27%  { opacity: 0; }
+        28%  { opacity: 1; transform: translate(0,0) scale(1); }
+        34%  { opacity: 1; transform: translate(-50px,55px) scale(0.8); }
+        45%  { opacity: 0.8; transform: translate(-48px,58px) scale(0.6); }
+        55%  { opacity: 0.8; transform: translate(-46px,60px) scale(0.6); }
+        65%  { opacity: 0.6; transform: translate(-44px,62px) scale(0.5); }
+        100% { opacity: 0.4; transform: translate(-44px,62px) scale(0.5); }
+      }
+      @keyframes bloodDrop4 {
+        0%   { opacity: 0; transform: translate(0,0) scale(0); }
+        25%  { opacity: 0; transform: translate(0,0) scale(0); }
+        28%  { opacity: 0; }
+        29%  { opacity: 1; transform: translate(0,0) scale(1); }
+        35%  { opacity: 1; transform: translate(45px,40px) scale(0.7); }
+        44%  { opacity: 0.8; transform: translate(42px,44px) scale(0.5); }
+        54%  { opacity: 0.8; transform: translate(40px,46px) scale(0.5); }
+        64%  { opacity: 0.5; transform: translate(38px,48px) scale(0.4); }
+        100% { opacity: 0.3; transform: translate(38px,48px) scale(0.4); }
+      }
+      @keyframes bloodDrop5 {
+        0%   { opacity: 0; transform: translate(0,0) scale(0); }
+        25%  { opacity: 0; transform: translate(0,0) scale(0); }
+        26%  { opacity: 1; transform: translate(0,0) scale(1); }
+        30%  { opacity: 1; transform: translate(-35px,-65px) scale(0.6); }
+        38%  { opacity: 0.7; transform: translate(-33px,-60px) scale(0.4); }
+        48%  { opacity: 0.5; transform: translate(-31px,-58px) scale(0.4); }
+        100% { opacity: 0.2; transform: translate(-31px,-58px) scale(0.3); }
+      }
+      @keyframes bloodDrop6 {
+        0%   { opacity: 0; transform: translate(0,0) scale(0); }
+        25%  { opacity: 0; transform: translate(0,0) scale(0); }
+        27%  { opacity: 0; }
+        28%  { opacity: 1; transform: translate(0,0) scale(1); }
+        32%  { opacity: 1; transform: translate(60px,20px) scale(0.6); }
+        40%  { opacity: 0.7; transform: translate(55px,25px) scale(0.4); }
+        50%  { opacity: 0.5; transform: translate(53px,28px) scale(0.4); }
+        100% { opacity: 0.2; transform: translate(53px,28px) scale(0.3); }
+      }
+      @keyframes bloodDrip1 {
+        0%   { opacity: 0; }
+        30%  { opacity: 0; }
+        32%  { opacity: 0.6; }
+        50%  { opacity: 0.5; transform: translate(0,20px); }
+        70%  { opacity: 0.4; transform: translate(0,40px); }
+        100% { opacity: 0.2; transform: translate(0,60px); }
+      }
+      @keyframes bloodDrip2 {
+        0%   { opacity: 0; }
+        30%  { opacity: 0; }
+        33%  { opacity: 0.5; }
+        55%  { opacity: 0.4; transform: translate(0,25px); }
+        75%  { opacity: 0.3; transform: translate(0,50px); }
+        100% { opacity: 0.1; transform: translate(0,70px); }
+      }
+      @keyframes wingFlap {
+        0%   { transform: rotate(0deg); }
+        50%  { transform: rotate(25deg); }
+        100% { transform: rotate(0deg); }
+      }
+      @keyframes wingFlapStop {
+        0%   { transform: rotate(0deg); }
+        24%  { transform: rotate(0deg); }
+        100% { transform: rotate(0deg); }
+      }
+      .swatter { animation: swat 5s ease-in-out infinite; transform-origin: 180px 20px; }
+      .fly     { animation: flyMove 5s ease-in-out infinite; }
+      .splat   { animation: splat 5s ease-in-out infinite; }
+      .flash   { animation: impactFlash 5s ease-out infinite; }
+      .b1      { animation: bloodDrop1 5s ease-out infinite; }
+      .b2      { animation: bloodDrop2 5s ease-out infinite; }
+      .b3      { animation: bloodDrop3 5s ease-out infinite; }
+      .b4      { animation: bloodDrop4 5s ease-out infinite; }
+      .b5      { animation: bloodDrop5 5s ease-out infinite; }
+      .b6      { animation: bloodDrop6 5s ease-out infinite; }
+      .d1      { animation: bloodDrip1 5s linear infinite; }
+      .d2      { animation: bloodDrip2 5s linear infinite; }
+      .wing    { animation: wingFlap 0.15s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- Boden -->
+  <line x1="40" y1="450" x2="360" y2="450" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- Fliegenklatsche -->
+  <g class="swatter">
+    <!-- Stiel -->
+    <rect x="175" y="30" width="10" height="250" rx="5" fill="#8B4513"/>
+    <rect x="175" y="60" width="10" height="200" fill="#A0522D" opacity="0.3"/>
+    <!-- Griff -->
+    <rect x="172" y="20" width="16" height="50" rx="5" fill="#A0522D"/>
+    <rect x="172" y="25" width="16" height="4" rx="2" fill="#6B3410" opacity="0.5"/>
+    <rect x="172" y="40" width="16" height="4" rx="2" fill="#6B3410" opacity="0.5"/>
+    <rect x="172" y="55" width="16" height="4" rx="2" fill="#6B3410" opacity="0.5"/>
+    <!-- Kopf Rahmen -->
+    <rect x="150" y="270" width="60" height="80" rx="8" fill="none" stroke="#555" stroke-width="4"/>
+    <!-- Netz waagerecht -->
+    <line x1="156" y1="285" x2="204" y2="285" stroke="#666" stroke-width="1.5"/>
+    <line x1="156" y1="300" x2="204" y2="300" stroke="#666" stroke-width="1.5"/>
+    <line x1="156" y1="315" x2="204" y2="315" stroke="#666" stroke-width="1.5"/>
+    <line x1="156" y1="330" x2="204" y2="330" stroke="#666" stroke-width="1.5"/>
+    <line x1="156" y1="345" x2="204" y2="345" stroke="#666" stroke-width="1.5"/>
+    <!-- Netz senkrecht -->
+    <line x1="165" y1="278" x2="165" y2="342" stroke="#666" stroke-width="1.5"/>
+    <line x1="180" y1="278" x2="180" y2="342" stroke="#666" stroke-width="1.5"/>
+    <line x1="195" y1="278" x2="195" y2="342" stroke="#666" stroke-width="1.5"/>
+  </g>
+
+  <!-- Fliege -->
+  <g class="fly" transform="translate(230, 380)">
+    <!-- Beine -->
+    <line x1="-6" y1="-2" x2="-14" y2="-8" stroke="#222" stroke-width="1"/>
+    <line x1="-6" y1="2" x2="-14" y2="4" stroke="#222" stroke-width="1"/>
+    <line x1="-6" y1="6" x2="-14" y2="12" stroke="#222" stroke-width="1"/>
+    <line x1="6" y1="-2" x2="14" y2="-8" stroke="#222" stroke-width="1"/>
+    <line x1="6" y1="2" x2="14" y2="4" stroke="#222" stroke-width="1"/>
+    <line x1="6" y1="6" x2="14" y2="12" stroke="#222" stroke-width="1"/>
+    <!-- Flügel -->
+    <ellipse class="wing" cx="-9" cy="-11" rx="13" ry="6" fill="#aaddff" opacity="0.5" transform-origin="-9 -9"/>
+    <ellipse class="wing" cx="9" cy="-11" rx="13" ry="6" fill="#aaddff" opacity="0.5" transform-origin="9 -9"/>
+    <!-- Körper -->
+    <ellipse cx="0" cy="0" rx="7" ry="11" fill="#2a2a2a"/>
+    <!-- Kopf -->
+    <circle cx="0" cy="-13" r="5" fill="#333"/>
+    <!-- Augen -->
+    <circle cx="-2.5" cy="-14" r="2" fill="#d00"/>
+    <circle cx="2.5" cy="-14" r="2" fill="#d00"/>
+    <!-- Augen glanz -->
+    <circle cx="-2" cy="-14.5" r="0.7" fill="#fff"/>
+    <circle cx="3" cy="-14.5" r="0.7" fill="#fff"/>
+  </g>
+
+  <!-- Impact Flash -->
+  <circle class="flash" cx="230" cy="380" r="30" fill="#ff0" opacity="0"/>
+
+  <!-- Splat (zerquetschte Fliege) -->
+  <g class="splat" transform="translate(230, 380)">
+    <!-- Körper matsch -->
+    <ellipse cx="0" cy="0" rx="18" ry="7" fill="#2a2a2a" opacity="0.9"/>
+    <ellipse cx="-3" cy="-2" rx="10" ry="4" fill="#444" opacity="0.5"/>
+    <!-- Beine abgeknickt -->
+    <line x1="-8" y1="-4" x2="-18" y2="-10" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-9" y1="1" x2="-18" y2="2" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-8" y1="5" x2="-18" y2="10" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="8" y1="-4" x2="18" y2="-10" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="9" y1="1" x2="18" y2="2" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="8" y1="5" x2="18" y2="10" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Flügel abgerissen -->
+    <ellipse cx="-14" cy="-8" rx="8" ry="4" fill="#88bbdd" opacity="0.4" transform="rotate(-20,-14,-8)"/>
+    <ellipse cx="14" cy="-8" rx="8" ry="4" fill="#88bbdd" opacity="0.4" transform="rotate(20,14,-8)"/>
+    <!-- Blutlache -->
+    <ellipse cx="0" cy="3" rx="20" ry="6" fill="#b00" opacity="0.3"/>
+    <ellipse cx="5" cy="4" rx="12" ry="4" fill="#d00" opacity="0.2"/>
+  </g>
+
+  <!-- Blutspritzer -->
+  <g filter="url(#blut-blur)">
+    <ellipse class="b1" cx="230" cy="380" rx="5" ry="3" fill="#c00" transform="rotate(30,230,380)"/>
+    <ellipse class="b2" cx="230" cy="380" rx="4" ry="2.5" fill="#a00" transform="rotate(-20,230,380)"/>
+    <ellipse class="b3" cx="230" cy="380" rx="4.5" ry="2.5" fill="#d00" transform="rotate(60,230,380)"/>
+    <ellipse class="b4" cx="230" cy="380" rx="3.5" ry="2" fill="#900" transform="rotate(-45,230,380)"/>
+    <ellipse class="b5" cx="230" cy="380" rx="4" ry="2" fill="#b00" transform="rotate(80,230,380)"/>
+    <ellipse class="b6" cx="230" cy="380" rx="3" ry="1.5" fill="#800" transform="rotate(-60,230,380)"/>
+  </g>
+
+  <!-- Blutspritzer klein (ohne blur) -->
+  <circle class="b1" cx="230" cy="380" r="2" fill="#e00"/>
+  <circle class="b2" cx="230" cy="380" r="1.8" fill="#c00"/>
+  <circle class="b4" cx="230" cy="380" r="2.5" fill="#d00"/>
+  <circle class="b5" cx="230" cy="380" r="1.5" fill="#a00"/>
+  <circle class="b6" cx="230" cy="380" r="2" fill="#b00"/>
+
+  <!-- Blut das heruntertropft -->
+  <ellipse class="d1" cx="220" cy="382" rx="2" ry="3" fill="#a00" opacity="0"/>
+  <ellipse class="d2" cx="240" cy="384" rx="1.5" ry="2.5" fill="#900" opacity="0"/>
+</svg>

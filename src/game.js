@@ -145,6 +145,67 @@
     let modus = "warmup";
     let pendingRecord = null;
     let zielErscheinungsZeit = null;
+    let audioCtx = null;
+
+    function getAudioContext() {
+        if (!audioCtx) {
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (e) {
+                return null;
+            }
+        }
+        return audioCtx;
+    }
+
+    function playSplatSound() {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        try {
+            const bufferSize = Math.floor(ctx.sampleRate * 0.12);
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                const t = i / bufferSize;
+                data[i] = (Math.random() * 2 - 1) * Math.exp(-t * 8);
+            }
+            const source = ctx.createBufferSource();
+            source.buffer = buffer;
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.value = 600;
+            const gain = ctx.createGain();
+            gain.gain.value = 0.12;
+            source.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            source.start();
+        } catch (e) {}
+    }
+
+    function showSplat(x, y, size) {
+        const splat = document.createElement('div');
+        splat.className = 'splat-overlay';
+        splat.style.left = x + 'px';
+        splat.style.top = y + 'px';
+        const s = Math.max(size * 1.2, 40);
+        splat.style.width = s + 'px';
+        splat.style.height = s + 'px';
+        splat.innerHTML = '<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">' +
+            '<ellipse cx="20" cy="20" rx="14" ry="8" fill="#2a2a2a" opacity="0.85"/>' +
+            '<ellipse cx="20" cy="22" rx="16" ry="6" fill="#b00" opacity="0.35"/>' +
+            '<ellipse cx="24" cy="21" rx="10" ry="4" fill="#d00" opacity="0.25"/>' +
+            '<circle cx="14" cy="17" r="3" fill="#c00" opacity="0.6"/>' +
+            '<circle cx="26" cy="18" r="2.5" fill="#d00" opacity="0.5"/>' +
+            '<circle cx="18" cy="24" r="2" fill="#a00" opacity="0.7"/>' +
+            '<circle cx="28" cy="22" r="1.8" fill="#e00" opacity="0.4"/>' +
+            '<circle cx="12" cy="21" r="1.5" fill="#b00" opacity="0.5"/>' +
+            '</svg>';
+        const field = elements.spielfeld;
+        if (!field) return;
+        field.appendChild(splat);
+        setTimeout(() => { if (splat.parentNode) splat.remove(); }, 700);
+    }
 
     scoring.record = storage.loadRecord(0);
     ui.renderHighscores ? ui.renderHighscores(storage.loadHighscores ? storage.loadHighscores() : {}, null) : null;
@@ -181,6 +242,10 @@
         zielRestzeit = modusConfig[modus].zielzeit === null ? null : Math.round(modusConfig[modus].zielzeit * 1000);
         ui.setStartButtonDisabled(false);
         anzeigeAktualisieren();
+        if (elements.ziel) {
+            elements.ziel.style.opacity = '1';
+            elements.ziel.classList.remove("hit");
+        }
     }
 
     function clearTargetTimer() {
@@ -212,7 +277,6 @@
         const neueGroesse = Math.floor(35 + Math.random() * 35);
         elements.ziel.style.width = `${neueGroesse}px`;
         elements.ziel.style.height = `${neueGroesse}px`;
-        elements.ziel.style.setProperty("--ziel-scale", "1");
         platziereElementZufall(elements.ziel, neueGroesse);
         zielErscheinungsZeit = Date.now();
         elements.ziel.focus();
@@ -264,7 +328,8 @@
 
     function zielVerpasst() {
         clearTargetTimer();
-        ui.setMessage("Zu langsam! Der Kreis wird neu gesetzt.");
+        ui.setMessage("Zu langsam! Die Fliege ist weg.");
+        elements.ziel.style.opacity = '1';
         zielBewegen();
         versteckeBomben();
         if (Math.random() < 0.35) {
@@ -314,8 +379,9 @@
         spielRestzeit = modusConfig[modus].spielDauer;
         zielRestzeit = modusConfig[modus].zielzeit === null ? null : Math.round(modusConfig[modus].zielzeit * 1000);
         anzeigeAktualisieren();
-        ui.setMessage("Los! Klicke auf den Kreis.");
+        ui.setMessage("Los! Zerquetsche die Fliegen!");
         ui.setStartButtonDisabled(true);
+        elements.ziel.style.opacity = '1';
         ui.setTargetVisible(true);
         versteckeBomben();
         zielBewegen();
@@ -367,10 +433,17 @@
         const reactionTime = zielErscheinungsZeit ? Date.now() - zielErscheinungsZeit : null;
         scoring.hit(reactionTime);
         anzeigeAktualisieren();
-        ui.setMessage("Treffer! Punkt erzielt.");
-        elements.ziel.classList.remove("hit");
-        void elements.ziel.offsetWidth;
-        elements.ziel.classList.add("hit");
+
+        const rect = elements.ziel.getBoundingClientRect();
+        const fieldRect = elements.spielfeld.getBoundingClientRect();
+        const sx = rect.left - fieldRect.left + rect.width / 2;
+        const sy = rect.top - fieldRect.top + rect.height / 2;
+        playSplatSound();
+        showSplat(sx, sy, rect.width);
+
+        ui.setMessage("Fliege zerplatzt!");
+
+        elements.ziel.style.opacity = '0';
         zielBewegen();
         versteckeBomben();
         if (Math.random() < 0.35) {
@@ -380,6 +453,12 @@
             bewegeBomben();
         }
         startTargetTimer();
+
+        setTimeout(() => {
+            if (spielLaeuft) {
+                elements.ziel.style.opacity = '1';
+            }
+        }, 180);
     }
 
     function handleFieldClick(event) {
@@ -392,7 +471,7 @@
             const isInPlayArea = target.closest("#spielfeld");
             if (isInPlayArea) {
                 scoring.missclick();
-                ui.setMessage("Fehlklick! Konzentrier dich auf den Kreis.");
+                ui.setMessage("Daneben! Ziel auf die Fliege.");
             }
             return;
         }

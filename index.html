@@ -16,7 +16,8 @@
 <div class="spiel-shell">
  
         <p class="untertitel">
-            Triff den grünen Kreis so oft wie möglich.
+            Zerquetsche die Fliegen mit der Fliegenklatsche!
+            <a href="fliegenklatsche.svg" style="display:block;font-size:0.8rem;margin-top:0.5rem;">Fliegenklatsche Animation</a>
 </p>
  
         <section class="anzeigen">
@@ -45,7 +46,22 @@
  
             <div class="spiel-panel">
                 <section id="spielfeld" tabindex="0" role="application" aria-label="Spielfeld">
-                    <button id="ziel" aria-label="Ziel treffen"></button>
+                    <button id="ziel" aria-label="Fliege treffen">
+                        <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="fliege-svg">
+                            <ellipse class="fliege-fluegel" cx="14" cy="19" rx="14" ry="7" fill="#aaddff" opacity="0.45"/>
+                            <ellipse class="fliege-fluegel re" cx="30" cy="19" rx="14" ry="7" fill="#aaddff" opacity="0.45"/>
+                            <ellipse cx="22" cy="25" rx="7" ry="11" fill="#2a2a2a"/>
+                            <circle cx="22" cy="12" r="5.5" fill="#333"/>
+                            <circle cx="19.5" cy="11" r="2.2" fill="#c00"/>
+                            <circle cx="24.5" cy="11" r="2.2" fill="#c00"/>
+                            <line x1="15" y1="20" x2="8" y2="15" stroke="#222" stroke-width="1.3" stroke-linecap="round"/>
+                            <line x1="15" y1="25" x2="7" y2="26" stroke="#222" stroke-width="1.3" stroke-linecap="round"/>
+                            <line x1="15" y1="31" x2="8" y2="36" stroke="#222" stroke-width="1.3" stroke-linecap="round"/>
+                            <line x1="29" y1="20" x2="36" y2="15" stroke="#222" stroke-width="1.3" stroke-linecap="round"/>
+                            <line x1="29" y1="25" x2="37" y2="26" stroke="#222" stroke-width="1.3" stroke-linecap="round"/>
+                            <line x1="29" y1="31" x2="36" y2="36" stroke="#222" stroke-width="1.3" stroke-linecap="round"/>
+                        </svg>
+                    </button>
                     <button class="bombe" aria-label="Bombe"></button>
                     <button class="bombe" aria-label="Bombe"></button>
                     <button class="bombe" aria-label="Bombe"></button>

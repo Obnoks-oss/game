@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <!-- Karosserie -->
+  <path d="M100 280 L120 200 L200 160 L600 160 L680 200 L700 280 Z" fill="#3498db" stroke="#2c3e50" stroke-width="4"/>
+
+  <!-- Dach -->
+  <path d="M220 160 L260 90 L540 90 L580 160 Z" fill="#2980b9" stroke="#2c3e50" stroke-width="4"/>
+
+  <!-- Fenster -->
+  <path d="M240 150 L275 100 L400 100 L400 150 Z" fill="#aed6f1" stroke="#2c3e50" stroke-width="3"/>
+  <path d="M420 150 L420 100 L525 100 L560 150 Z" fill="#aed6f1" stroke="#2c3e50" stroke-width="3"/>
+
+  <!-- Fenster-Säule -->
+  <line x1="410" y1="100" x2="410" y2="150" stroke="#2c3e50" stroke-width="4"/>
+
+  <!-- Stoßstange hinten -->
+  <rect x="85" y="270" width="30" height="20" rx="5" fill="#e74c3c"/>
+
+  <!-- Stoßstange vorne -->
+  <rect x="685" y="270" width="30" height="20" rx="5" fill="#e74c3c"/>
+
+  <!-- Scheinwerfer -->
+  <rect x="690" y="230" width="15" height="25" rx="3" fill="#f1c40f"/>
+
+  <!-- Rücklicht -->
+  <rect x="95" y="230" width="15" height="25" rx="3" fill="#e74c3c"/>
+
+  <!-- Rad hinten -->
+  <circle cx="250" cy="290" r="45" fill="#2c3e50"/>
+  <circle cx="250" cy="290" r="30" fill="#bdc3c7"/>
+  <circle cx="250" cy="290" r="10" fill="#2c3e50"/>
+
+  <!-- Rad vorne -->
+  <circle cx="550" cy="290" r="45" fill="#2c3e50"/>
+  <circle cx="550" cy="290" r="30" fill="#bdc3c7"/>
+  <circle cx="550" cy="290" r="10" fill="#2c3e50"/>
+
+  <!-- Türlinie -->
+  <line x1="400" y1="160" x2="400" y2="280" stroke="#2c3e50" stroke-width="2"/>
+
+  <!-- Türgriff hinten -->
+  <rect x="300" y="240" width="25" height="6" rx="3" fill="#2c3e50"/>
+
+  <!-- Türgriff vorne -->
+  <rect x="475" y="240" width="25" height="6" rx="3" fill="#2c3e50"/>
+</svg>

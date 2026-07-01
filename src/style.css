@@ -203,21 +203,24 @@ h1,
     border: 3px solid white;
     border-radius: 18px;
     background: #0f172a;
+    cursor: url('../fliegenklatsche-cursor.svg') 20 14, auto;
 }
 
 #ziel {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 80px;
-    height: 80px;
-    transform: translate(-50%, -50%) scale(var(--ziel-scale, 1));
+    width: 55px;
+    height: 55px;
+    transform: translate(-50%, -50%);
     border: none;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 30px #22c55e;
-    cursor: pointer;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    cursor: url('../fliegenklatsche-cursor.svg') 20 14, auto;
     display: none;
+    padding: 0;
+    z-index: 2;
 }
 
 .bombe {
@@ -315,24 +318,55 @@ h1,
 }
 
 #ziel {
-    transition: box-shadow 0.2s ease;
-    transform: translate(-50%, -50%) scale(var(--ziel-scale, 1));
+    transition: none;
+    transform: translate(-50%, -50%);
 }
 
-#ziel.hit {
-    animation: treffen 0.3s ease;
+/* animated via JS opacity toggle instead */
+
+/* Fliege innen im Button */
+#ziel .fliege-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
 }
 
-@keyframes treffen {
-    0% {
-        transform: translate(-50%, -50%) scale(var(--ziel-scale, 1));
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(calc(var(--ziel-scale, 1) * 1.4));
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(var(--ziel-scale, 1));
-    }
+#ziel .fliege-fluegel {
+    transform-origin: 14px 19px;
+    animation: fluegelSchlag 0.12s ease-in-out infinite;
+}
+
+@keyframes fluegelSchlag {
+    0%   { transform: rotate(-25deg) scaleX(1); }
+    50%  { transform: rotate(-25deg) scaleX(0.3); }
+    100% { transform: rotate(-25deg) scaleX(1); }
+}
+
+#ziel .fliege-fluegel.re {
+    transform-origin: 30px 19px;
+    animation-name: fluegelSchlagRe;
+}
+
+@keyframes fluegelSchlagRe {
+    0%   { transform: rotate(25deg) scaleX(1); }
+    50%  { transform: rotate(25deg) scaleX(0.3); }
+    100% { transform: rotate(25deg) scaleX(1); }
+}
+
+/* Splat-Overlay beim Treffer */
+.splat-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+    animation: splatVerblassen 0.6s ease-out forwards;
+}
+
+@keyframes splatVerblassen {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+    20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
 }
 
 #feuerwerk {
@@ -438,6 +472,14 @@ input:focus-visible {
 
     #ziel {
         transition: none;
+    }
+
+    #ziel .fliege-fluegel {
+        animation: none;
+    }
+
+    .splat-overlay {
+        animation: none;
     }
 
     .modus-button {
